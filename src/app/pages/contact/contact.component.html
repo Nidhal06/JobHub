@@ -1,0 +1,79 @@
+<section class="contact-section py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold display-5 text-primary animate-fade">
+                Get in Touch ✉️
+            </h1>
+            <p class="lead text-muted">
+                We'd love to hear from you! Whether you have a question, feedback, or
+                partnership idea — our team is here to help.
+            </p>
+        </div>
+
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-5">
+                <div class="info-card p-4 mb-4 animate-up">
+                    <h4 class="fw-semibold text-primary mb-3">Contact Information</h4>
+                    <p class="text-muted">
+                        Reach out directly through any of these channels:
+                    </p>
+
+                    <div class="info-item d-flex align-items-center mb-3" *ngFor="let channel of supportChannels">
+                        <div class="icon me-3">
+                            <i [class]="channel.icon"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-semibold mb-1">{{ channel.label }}</h6>
+                            <a [href]="'mailto:' + channel.detail" class="text-muted text-decoration-none small">
+                                {{ channel.detail }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="text-muted small mb-0">
+                            <i class="bi bi-clock text-primary me-1"></i>
+                            Support hours: Mon–Fri, 9:00 AM – 6:00 PM
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="form-card p-4 animate-up">
+                    <h4 class="fw-semibold text-primary mb-4">Send us a message</h4>
+                    <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-control" name="name" ngModel required
+                                    placeholder="John Doe" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Your Email</label>
+                                <input type="email" class="form-control" name="email" ngModel required
+                                    placeholder="you@example.com" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-control" name="subject" ngModel
+                                    placeholder="Partnership inquiry..." />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="5" name="message" ngModel required
+                                    placeholder="Type your message here..."></textarea>
+                            </div>
+                            <div class="col-12 text-end mt-3">
+                                <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold"
+                                    [disabled]="!contactForm.valid">
+                                    <i class="bi bi-send me-1"></i> Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

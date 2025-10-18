@@ -1,0 +1,134 @@
+<section class="hero py-5 text-dark position-relative overflow-hidden">
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+
+    <div class="container py-5 position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="display-4 fw-bold text-primary animate__animated animate__fadeInUp">
+                    Build Your <span class="text-gradient">Next Career Move</span> with JobHub
+                </h1>
+                <p class="lead text-muted mt-3 animate__animated animate__fadeInUp animate__delay-1s">
+                    Explore tailored opportunities, streamline hiring pipelines, and connect through
+                    seamless collaboration between seekers and recruiters.
+                </p>
+
+                <div class="d-flex gap-3 mt-4 flex-wrap animate__animated animate__fadeInUp animate__delay-2s">
+                    <a class="btn btn-primary btn-lg shadow-sm hover-scale" routerLink="/jobs">
+                        <i class="bi bi-search me-2"></i> Browse Jobs
+                    </a>
+                    <a class="btn btn-outline-primary btn-lg hover-scale" routerLink="/login">
+                        <i class="bi bi-person-circle me-2"></i> Access Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 text-center">
+                <img src="assets/images/hero-illustration.webp" alt="Job search illustration"
+                    class="img-fluid hero-img animate__animated animate__fadeInRight" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="audiences py-5 bg-light position-relative">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <h2 class="fw-semibold text-primary mb-3">Built for Seekers and Recruiters Alike</h2>
+            <p class="text-muted mx-auto" style="max-width: 650px;">
+                Whether exploring your next role or scaling your team, JobHub adapts to your unique workflow.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6" *ngFor="let audience of ['job seekers', 'recruiters']; let i = index">
+                <div class="card h-100 border-0 shadow-sm p-4 rounded-4 hover-lift">
+                    <h3 class="h4 fw-semibold mb-3 text-primary">
+                        For {{ audience | titlecase }}
+                    </h3>
+                    <p class="text-muted mb-4">
+                        {{ i === 0
+                        ? 'Showcase your skills, stay organized, and apply with confidence using guided steps that
+                        highlight your strengths.'
+                        : 'Engage top talent with automation, feedback loops, and analytics that drive hiring
+                        excellence.'
+                        }}
+                    </p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex align-items-start mb-3"
+                            *ngFor="let benefit of (i === 0 ? seekerBenefits : recruiterBenefits)">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span class="text-muted">{{ benefit }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="workflow py-5">
+    <div class="container py-4 text-center">
+        <h2 class="fw-semibold mb-3">From Discovery to Offer — Simplified</h2>
+        <p class="text-muted mb-5">
+            Streamline your entire hiring process in one collaborative space.
+        </p>
+
+        <div class="row g-4">
+            <div class="col-md-4" *ngFor="let step of steps; let idx = index">
+                <div class="card h-100 border-0 shadow-sm p-4 rounded-4 hover-lift">
+                    <div class="step-number mb-3">{{ idx + 1 }}</div>
+                    <h3 class="h5 fw-semibold">{{ step.title }}</h3>
+                    <p class="text-muted">{{ step.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section py-5 bg-light">
+    <div class="container py-4">
+        <div class="row g-4 text-center">
+            <div class="col-sm-6 col-lg-3" *ngFor="let stat of stats">
+                <div class="card h-100 border-0 shadow-sm rounded-4 hover-fade">
+                    <div class="card-body p-4">
+                        <div class="display-6 fw-bold text-gradient">{{ stat.value }}</div>
+                        <p class="text-muted mb-0">{{ stat.label }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials py-5">
+    <div class="container py-4 text-center">
+        <h2 class="fw-semibold mb-3 text-primary">Voices from Our Community</h2>
+        <p class="text-muted mb-5">
+            Hear how JobHub transforms the hiring experience for both sides.
+        </p>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6" *ngFor="let t of testimonials">
+                <div class="card border-0 shadow-sm p-4 rounded-4 bg-white hover-lift">
+                    <p class="testimonial-quote mb-4 fst-italic">“{{ t.quote }}”</p>
+                    <div class="fw-semibold">{{ t.name }}</div>
+                    <div class="text-muted small">{{ t.title }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-banner text-center text-white py-5 position-relative overflow-hidden">
+    <div class="overlay"></div>
+    <div class="container position-relative">
+        <h2 class="display-6 fw-semibold">Ready to Take the Next Step?</h2>
+        <p class="lead mb-4">
+            Create your free account today and unlock smart hiring tools.
+        </p>
+        <a class="btn btn-light btn-lg text-primary fw-semibold shadow-sm hover-scale" routerLink="/login">
+            <i class="bi bi-rocket-takeoff me-2"></i> Get Started
+        </a>
+    </div>
+</section>

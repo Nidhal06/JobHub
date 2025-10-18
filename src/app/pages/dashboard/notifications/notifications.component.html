@@ -1,0 +1,47 @@
+<div class="container py-4 notifications-center" *ngIf="notifications$ | async as notifications">
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">Your notifications</h5>
+                <p class="text-muted small mb-0">
+                    Stay on top of job approvals, submissions, and application updates.
+                </p>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" type="button" (click)="markAll()">
+                Mark all as read
+            </button>
+        </div>
+
+        <div class="list-group list-group-flush">
+            <div class="list-group-item d-flex justify-content-between align-items-start"
+                *ngFor="let notification of notifications">
+                <div>
+                    <div class="fw-semibold" [class.text-muted]="notification.read">
+                        {{ notification.message }}
+                    </div>
+                    <div class="text-muted small">
+                        {{ notification.createdAt | date : "medium" }}
+                    </div>
+                </div>
+                <div>
+                    <span class="badge me-2" [ngClass]="{
+              'bg-primary': notification.type === 'info',
+              'bg-success': notification.type === 'success',
+              'bg-warning text-dark': notification.type === 'warning',
+              'bg-danger': notification.type === 'alert'
+            }">
+                        {{ notification.type | titlecase }}
+                    </span>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" (click)="mark(notification)"
+                        [disabled]="notification.read">
+                        {{ notification.read ? "Read" : "Mark as read" }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="list-group-item text-center text-muted py-5" *ngIf="!notifications.length">
+                You're all caught up.
+            </div>
+        </div>
+    </div>
+</div>

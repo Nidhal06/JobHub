@@ -1,0 +1,91 @@
+<div class="admin-dashboard">
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Pending moderation</h6>
+                    <div class="display-6 fw-semibold">{{ pendingJobs.length }}</div>
+                    <p class="small text-muted mb-0">
+                        Review new job offers before they go live.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Approved</h6>
+                    <div class="display-6 fw-semibold text-success">
+                        {{ approvedJobs.length }}
+                    </div>
+                    <p class="small text-muted mb-0">Visible on the job board.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <h6 class="text-muted">Denied</h6>
+                    <div class="display-6 fw-semibold text-danger">
+                        {{ deniedJobs.length }}
+                    </div>
+                    <p class="small text-muted mb-0">Awaiting recruiter revisions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm" *ngIf="pendingJobs.length; else emptyState">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Job offers pending approval</h5>
+            <span class="badge bg-warning text-dark">Action required</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Submitted by</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of pendingJobs">
+                        <td>
+                            <div class="fw-semibold">{{ job.title }}</div>
+                            <div class="small text-muted">
+                                {{ job.industry }} • {{ job.type | titlecase }}
+                            </div>
+                        </td>
+                        <td>{{ job.company }}</td>
+                        <td>{{ job.location }}</td>
+                        <td>{{ job.createdBy }}</td>
+                        <td class="text-end">
+                            <div class="btn-group">
+                                <button class="btn btn-outline-success btn-sm" type="button" (click)="approve(job)">
+                                    Approve
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" type="button" (click)="deny(job)">
+                                    Deny
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <ng-template #emptyState>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center py-5">
+                <h5 class="fw-semibold">All caught up!</h5>
+                <p class="text-muted mb-0">
+                    Recruiters have no pending submissions at the moment.
+                </p>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'bootstrap/scss/bootstrap';
+
+body {
+	font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	background-color: #f5f7fb;
+	color: #1f2933;
+}
+
+.app-main {
+	min-height: calc(100vh - 64px);
+}

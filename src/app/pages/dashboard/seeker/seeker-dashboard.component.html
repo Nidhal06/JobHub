@@ -1,0 +1,81 @@
+<div class="row g-4 seeker-dashboard">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Application timeline</h5>
+                <span class="badge bg-light text-dark">{{ applications.length }}</span>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item py-4" *ngFor="let application of applications">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fw-semibold">{{ application.candidateName }}</div>
+                            <div class="text-muted small">
+                                {{ application.submittedAt | date : "medium" }}
+                            </div>
+                        </div>
+                        <span class="badge bg-secondary">{{
+                            application.status | titlecase
+                            }}</span>
+                    </div>
+                    <p class="mt-3 mb-2 text-muted small">
+                        {{ application.coverLetter }}
+                    </p>
+                    <div class="d-flex gap-2 flex-wrap small">
+                        <span class="badge bg-primary-subtle text-primary">Job ID: {{ application.jobId }}</span>
+                        <span class="badge bg-light text-dark" *ngFor="let doc of application.attachments">{{ doc.name
+                            }}</span>
+                    </div>
+                </div>
+                <div class="list-group-item text-center text-muted py-5" *ngIf="!applications.length">
+                    You have not submitted any applications yet. Browse the job board to
+                    get started.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Recommended for you</h5>
+                <p class="text-muted small">
+                    Based on your profile and trending roles.
+                </p>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item px-0" *ngFor="let job of recommendedJobs">
+                        <div class="fw-semibold">{{ job.title }}</div>
+                        <div class="text-muted small">
+                            {{ job.company }} • {{ job.location }}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="badge bg-light text-dark">{{ job.salary }}</span>
+                            <button class="btn btn-sm" [ngClass]="isSaved(job) ? 'btn-success' : 'btn-outline-primary'"
+                                type="button" (click)="toggleSaved(job)">
+                                {{ isSaved(job) ? "Saved" : "Save job" }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="list-group-item text-muted" *ngIf="!recommendedJobs.length">
+                        New recommendations will appear here soon.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Saved jobs</h5>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2" *ngFor="let job of savedJobs">
+                        <div class="fw-semibold">{{ job.title }}</div>
+                        <div class="text-muted small">{{ job.company }}</div>
+                    </li>
+                    <li class="text-muted" *ngIf="!savedJobs.length">
+                        Save jobs to keep track of the roles you like.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

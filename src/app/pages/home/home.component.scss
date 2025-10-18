@@ -1,0 +1,104 @@
+.hero {
+    position: relative;
+    background: url('/assets/images/pattern.svg') center/cover no-repeat;
+
+    .text-gradient {
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.2;
+        filter: blur(60px);
+        animation: float 12s infinite ease-in-out alternate;
+    }
+
+    .shape-1 {
+        top: 10%;
+        left: 5%;
+        width: 150px;
+        height: 150px;
+        background: #0d6efd;
+    }
+
+    .shape-2 {
+        bottom: 10%;
+        right: 10%;
+        width: 200px;
+        height: 200px;
+        background: #6610f2;
+    }
+}
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    }
+}
+
+.hover-scale {
+    transition: transform 0.25s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.hover-fade {
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, #0d6efd, #6610f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.workflow {
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(255, 255, 255, 0.9));
+}
+
+.step-number {
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.cta-banner {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    position: relative;
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: url('/assets/images/patt.svg') center/cover no-repeat;
+        opacity: 0.15;
+    }
+}
+
+@keyframes float {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-40px);
+    }
+}

@@ -1,0 +1,55 @@
+.app-footer {
+    background: linear-gradient(135deg, #004aad, #0072ff);
+    position: relative;
+    overflow: hidden;
+
+    .footer-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.1), transparent 60%);
+        pointer-events: none;
+    }
+
+    .footer-link {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+    }
+
+    .footer-icon {
+        color: #fff;
+        transition: transform 0.3s ease, color 0.3s ease;
+
+        &:hover {
+            transform: scale(1.2);
+            color: #ffc107;
+        }
+    }
+
+    .social-icons {
+        i {
+            font-size: 1.3rem;
+        }
+    }
+
+    .back-to-top {
+        position: absolute;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        width: 45px;
+        height: 45px;
+        border: none;
+        opacity: 0.85;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            opacity: 1;
+            transform: translateY(-4px);
+        }
+    }
+}

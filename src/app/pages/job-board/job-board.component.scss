@@ -1,0 +1,54 @@
+.hero.creative-hero {
+    background: radial-gradient(circle at top left,
+            rgba(13, 110, 253, 0.15),
+            rgba(255, 255, 255, 0.95)),
+        url('/assets/images/hero-pattern.svg') no-repeat center/cover;
+    overflow: hidden;
+    position: relative;
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, #007bff, #6610f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.filter-card {
+    border-radius: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.filter-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.job-results {
+    background: linear-gradient(180deg, rgba(13, 110, 253, 0.03), #fff);
+}
+
+.empty-illustration {
+    width: 150px;
+    opacity: 0.85;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}

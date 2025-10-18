@@ -1,0 +1,105 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 overflow-hidden">
+                <div class="row g-0">
+                    <div class="col-lg-5 bg-primary text-white p-5">
+                        <h2 class="fw-semibold mb-3">Welcome to JobHub</h2>
+                        <p class="mb-4">
+                            Explore curated job offers, manage applications, and collaborate
+                            with recruiters and admins.
+                        </p>
+                        <ul class="list-unstyled small lh-lg">
+                            <li class="d-flex align-items-start mb-3">
+                                <span class="me-2">•</span>
+                                <span>Three demo roles are available. Use them to explore the full
+                                    platform capabilities.</span>
+                            </li>
+                            <li class="d-flex align-items-start mb-3">
+                                <span class="me-2">•</span>
+                                <span>Real-time notifications keep every role aligned on job status
+                                    and application updates.</span>
+                            </li>
+                            <li class="d-flex align-items-start">
+                                <span class="me-2">•</span>
+                                <span>Mock accounts demonstrate secure authentication flows without
+                                    a backend.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-7 p-5">
+                        <h3 class="fw-semibold mb-4">Sign in</h3>
+
+                        <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="emailInput">Email address</label>
+                                <input type="email" id="emailInput" class="form-control" formControlName="email"
+                                    [class.is-invalid]="
+                    controls['email'].invalid && controls['email'].touched
+                  " />
+                                <div class="invalid-feedback">Enter a valid email.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="passwordInput">Password</label>
+                                <input type="password" id="passwordInput" class="form-control"
+                                    formControlName="password" [class.is-invalid]="
+                    controls['password'].invalid && controls['password'].touched
+                  " />
+                                <div class="invalid-feedback">
+                                    Password must be at least 8 characters.
+                                </div>
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="errorMessage">
+                                {{ errorMessage }}
+                            </div>
+
+                            <button class="btn btn-primary w-100" type="submit" [disabled]="loading">
+                                <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+                                Log in
+                            </button>
+                        </form>
+
+                        <p class="text-center small text-muted mt-3 mb-0">
+                            New to JobHub?
+                            <a routerLink="/register">Create a recruiter or seeker account</a>.
+                        </p>
+
+                        <hr class="my-4" />
+
+                        <h5 class="mb-3">Demo accounts</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Password</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let account of demoAccounts">
+                                        <td class="text-capitalize">{{ account.role }}</td>
+                                        <td>{{ account.email }}</td>
+                                        <td>
+                                            <code>{{ account.password }}</code>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm" type="button"
+                                                (click)="useDemo(account)">
+                                                Quick login
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

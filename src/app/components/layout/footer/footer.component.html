@@ -1,0 +1,39 @@
+<footer class="app-footer py-5 mt-auto text-white position-relative overflow-hidden">
+    <div class="footer-overlay"></div>
+
+    <div
+        class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-4 position-relative">
+        <div class="text-center text-md-start">
+            <h5 class="fw-bold mb-1">JobHub</h5>
+            <p class="text-white-50 mb-0 small">
+                Connecting talent with opportunity.
+            </p>
+        </div>
+
+        <nav class="d-flex flex-wrap justify-content-center gap-3 small">
+            <a class="footer-link" routerLink="/about">About</a>
+            <a class="footer-link" routerLink="/contact">Contact</a>
+            <a class="footer-link" routerLink="/jobs">Browse Jobs</a>
+            <a class="footer-link" routerLink="/faq">FAQ</a>
+        </nav>
+    </div>
+
+    <hr class="border-light opacity-25 my-4" />
+
+    <div class="container text-center small text-white-50">
+        <span>&copy; {{ currentYear }} JobHub — All Rights Reserved.</span><br />
+        <span>
+            Made with <i class="fa-thin fa-laptop-code"></i> by
+            <strong>Nidhal Gharbi</strong>
+        </span>
+
+        <div class="social-icons d-flex justify-content-center gap-4 mt-3 fs-5">
+            <a href="https://www.linkedin.com/in/nidhal-gharbi-536140385/" target="_blank" class="footer-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" target="_blank" class="footer-icon" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        </div>
+    </div>
+
+    <button class="back-to-top btn btn-light rounded-circle shadow-sm" (click)="scrollToTop()">
+        <i class="bi bi-arrow-up text-primary"></i>
+    </button>
+</footer>
