@@ -4,6 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { JobApplication } from '../models/application.model';
 import { ExperienceLevel, JobFilter, JobOffer, JobStatus, JobType } from '../models/job.model';
 import { HttpClient } from '@angular/common/http';
+import { getApiBase } from '../config/runtime';
 
 interface CreateJobRequest {
     title: string;
@@ -29,7 +30,7 @@ interface CreateApplicationRequest {
 
 @Injectable({ providedIn: 'root' })
 export class JobService {
-    private readonly apiUrl = 'http://localhost:8081/api';
+    private readonly apiUrl = getApiBase();
     private readonly jobsSubject = new BehaviorSubject<JobOffer[]>([]);
     private readonly jobApplications = new Map<string, JobApplication[]>();
 

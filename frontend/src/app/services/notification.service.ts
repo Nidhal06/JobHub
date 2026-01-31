@@ -3,10 +3,11 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { UserNotification } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
+import { getApiBase } from '../config/runtime';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-    private readonly apiUrl = 'http://localhost:8081/api';
+    private readonly apiUrl = getApiBase();
     private readonly streams = new Map<string, BehaviorSubject<UserNotification[]>>();
 
     constructor(private http: HttpClient) {}
