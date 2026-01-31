@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { UserProfile, UserRole } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
+import { getApiBase } from '../config/runtime';
 
 type RegistrationRole = Extract<UserRole, 'recruiter' | 'seeker'>;
 
@@ -22,7 +23,7 @@ interface AuthResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private readonly apiUrl = 'http://localhost:8081/api';
+    private readonly apiUrl = getApiBase();
     private readonly currentUserSubject = new BehaviorSubject<UserProfile | null>(null);
     private readonly TOKEN_KEY = 'jobhub_token';
 
