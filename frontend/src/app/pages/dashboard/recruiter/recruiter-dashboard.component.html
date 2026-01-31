@@ -1,0 +1,331 @@
+<div class="row g-4 recruiter-dashboard">
+    <div class="col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Create a job offer</h5>
+                <p class="text-muted small">
+                    Submit detailed roles for admin approval.
+                </p>
+
+                <form [formGroup]="jobForm" (ngSubmit)="submitJob()">
+                    <div class="mb-3">
+                        <label class="form-label" for="titleInput">Job title</label>
+                        <input type="text" id="titleInput" class="form-control" formControlName="title"
+                            [class.is-invalid]="
+                controls['title'].invalid && controls['title'].touched
+              " />
+                        <div class="invalid-feedback">Enter a descriptive job title.</div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="locationInput">Location</label>
+                            <input type="text" id="locationInput" class="form-control" formControlName="location"
+                                [class.is-invalid]="
+                  controls['location'].invalid && controls['location'].touched
+                " />
+                            <div class="invalid-feedback">
+                                Specify a location or remote policy.
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="salaryInput">Salary range</label>
+                            <input type="text" id="salaryInput" class="form-control" formControlName="salary"
+                                [class.is-invalid]="
+                  controls['salary'].invalid && controls['salary'].touched
+                " />
+                            <div class="invalid-feedback">Share a salary band or rate.</div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-1">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="typeSelect">Job type</label>
+                            <select id="typeSelect" class="form-select" formControlName="type">
+                                <option *ngFor="let type of jobTypes" [value]="type">
+                                    {{ type | titlecase }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="experienceSelect">Experience level</label>
+                            <select id="experienceSelect" class="form-select" formControlName="experienceLevel">
+                                <option *ngFor="let level of experienceLevels" [value]="level">
+                                    {{ level | titlecase }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label class="form-label" for="industryInput">Industry</label>
+                        <input type="text" id="industryInput" class="form-control" formControlName="industry"
+                            [class.is-invalid]="
+                controls['industry'].invalid && controls['industry'].touched
+              " />
+                        <div class="invalid-feedback">Describe the industry or domain.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="descriptionInput">Role summary</label>
+                        <textarea id="descriptionInput" rows="4" class="form-control" formControlName="description"
+                            [class.is-invalid]="
+                controls['description'].invalid &&
+                controls['description'].touched
+              "></textarea>
+                        <div class="invalid-feedback">
+                            Include a compelling summary (min 50 characters).
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="requirementsInput">Requirements</label>
+                        <textarea id="requirementsInput" rows="3" class="form-control"
+                            placeholder="One requirement per line" formControlName="requirements"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="responsibilitiesInput">Responsibilities</label>
+                        <textarea id="responsibilitiesInput" rows="3" class="form-control"
+                            placeholder="One responsibility per line" formControlName="responsibilities"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="tagsInput">Tags</label>
+                        <input type="text" id="tagsInput" class="form-control"
+                            placeholder="Comma or newline separated skills" formControlName="tags" />
+                    </div>
+
+                    <button class="btn btn-primary w-100" type="submit">
+                        Submit for review
+                    </button>
+                </form>
+
+                <div class="alert alert-success mt-3" *ngIf="successMessage">
+                    {{ successMessage }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Your job postings</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Applications</th>
+                            <th>Last update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let job of jobs">
+                            <td>{{ job.title }}</td>
+                            <td>
+                                <span class="badge" [ngClass]="{
+                    'bg-success': job.status === 'approved',
+                    'bg-warning text-dark': job.status === 'pending',
+                    'bg-danger': job.status === 'denied'
+                  }">
+                                    {{ job.status | titlecase }}
+                                </span>
+                            </td>
+                            <td>{{ job.applications }}</td>
+                            <td>{{ job.createdAt | date : "mediumDate" }}</td>
+                        </tr>
+                        <tr *ngIf="!jobs.length">
+                            <td colspan="4" class="text-center text-muted py-4">
+                                No jobs submitted yet.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent applications</h5>
+                <span class="badge bg-light text-dark">{{ applications.length }}</span>
+            </div>
+            <div class="list-group list-group-flush">
+                <div class="list-group-item list-group-item-action" *ngFor="let application of applications"
+                    (click)="viewApplication(application)" style="cursor: pointer;">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fw-semibold">{{ application.candidateName }}</div>
+                            <div class="text-muted small">
+                                {{ application.candidateEmail }}
+                            </div>
+                            <div class="mt-1 small text-primary">
+                                Applied for: {{ getJobTitle(application.jobId) }}
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge" [ngClass]="getStatusBadgeClass(application.status)">
+                                {{ application.status | titlecase }}
+                            </span>
+                            <div class="mt-1 small text-muted">
+                                {{ application.submittedAt | date : "shortDate" }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 d-flex gap-2">
+                        <a *ngIf="application.linkedinUrl" [href]="application.linkedinUrl" target="_blank"
+                            class="btn btn-sm btn-outline-primary" (click)="$event.stopPropagation()">
+                            <i class="bi bi-linkedin"></i> LinkedIn
+                        </a>
+                        <a *ngIf="application.githubUrl" [href]="application.githubUrl" target="_blank"
+                            class="btn btn-sm btn-outline-dark" (click)="$event.stopPropagation()">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                        <span class="btn btn-sm btn-outline-secondary" (click)="$event.stopPropagation()">
+                            <i class="bi bi-eye"></i> View Details
+                        </span>
+                    </div>
+                </div>
+                <div class="list-group-item text-center text-muted py-4" *ngIf="!applications.length">
+                    Candidates will appear here once they apply.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Application Details Modal -->
+<div class="modal fade show d-block" tabindex="-1" *ngIf="selectedApplication"
+    style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Application Details</h5>
+                <button type="button" class="btn-close" (click)="closeApplicationModal()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Candidate Info -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Candidate Information</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Name:</strong> {{ selectedApplication.candidateName }}</p>
+                                <p class="mb-1"><strong>Email:</strong>
+                                    <a [href]="'mailto:' + selectedApplication.candidateEmail">
+                                        {{ selectedApplication.candidateEmail }}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1"><strong>Applied for:</strong> {{ getJobTitle(selectedApplication.jobId)
+                                    }}</p>
+                                <p class="mb-1"><strong>Applied on:</strong> {{ selectedApplication.submittedAt | date :
+                                    "medium" }}</p>
+                            </div>
+                        </div>
+                        <div class="mt-2 d-flex gap-2">
+                            <a *ngIf="selectedApplication.linkedinUrl" [href]="selectedApplication.linkedinUrl"
+                                target="_blank" class="btn btn-sm btn-primary">
+                                <i class="bi bi-linkedin"></i> LinkedIn Profile
+                            </a>
+                            <a *ngIf="selectedApplication.githubUrl" [href]="selectedApplication.githubUrl"
+                                target="_blank" class="btn btn-sm btn-dark">
+                                <i class="bi bi-github"></i> GitHub Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cover Letter -->
+                <div class="card mb-3" *ngIf="selectedApplication.coverLetter">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Cover Letter</h6>
+                        <p class="card-text" style="white-space: pre-wrap;">{{ selectedApplication.coverLetter }}</p>
+                    </div>
+                </div>
+
+                <!-- Attachments -->
+                <div class="card mb-3" *ngIf="selectedApplication.attachments?.length">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="card-subtitle text-muted mb-0">Attachments</h6>
+                            <button class="btn btn-sm btn-primary" (click)="downloadAllDocuments()"
+                                *ngIf="selectedApplication.attachments.length > 1">
+                                <i class="bi bi-download me-1"></i> Download All
+                            </button>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex justify-content-between align-items-center"
+                                *ngFor="let doc of selectedApplication.attachments">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-file-earmark me-2"></i>
+                                    <div>
+                                        <div>{{ doc.name }}</div>
+                                        <small class="text-muted">{{ (doc.size / 1024).toFixed(1) }} KB</small>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-primary"
+                                    (click)="downloadDocument(selectedApplication.id, doc.id, doc.name)">
+                                    <i class="bi bi-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Management -->
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-3 text-muted">Application Status</h6>
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <span class="fw-semibold">Current Status:</span>
+                            <span class="badge fs-6" [ngClass]="getStatusBadgeClass(selectedApplication.status)">
+                                {{ selectedApplication.status | titlecase }}
+                            </span>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-secondary w-100"
+                                    [disabled]="selectedApplication.status === 'received'"
+                                    (click)="updateApplicationStatus(selectedApplication.id, 'received')">
+                                    <i class="bi bi-inbox"></i> Received
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-info w-100"
+                                    [disabled]="selectedApplication.status === 'reviewed'"
+                                    (click)="updateApplicationStatus(selectedApplication.id, 'reviewed')">
+                                    <i class="bi bi-eye-fill"></i> Reviewed
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-success w-100"
+                                    [disabled]="selectedApplication.status === 'shortlisted'"
+                                    (click)="updateApplicationStatus(selectedApplication.id, 'shortlisted')">
+                                    <i class="bi bi-check-circle"></i> Shortlist
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-danger w-100"
+                                    [disabled]="selectedApplication.status === 'rejected'"
+                                    (click)="updateApplicationStatus(selectedApplication.id, 'rejected')">
+                                    <i class="bi bi-x-circle"></i> Reject
+                                </button>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3 mb-0" *ngIf="statusUpdateMessage">
+                            {{ statusUpdateMessage }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeApplicationModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

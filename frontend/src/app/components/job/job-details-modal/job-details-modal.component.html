@@ -1,0 +1,169 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" tabindex="-1" *ngIf="visible">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ job?.title }}</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+            </div>
+
+            <div class="modal-body" *ngIf="job as selected">
+                <div class="row g-4">
+                    <div class="col-lg-7">
+                        <h6 class="text-muted">Role Overview</h6>
+                        <p class="mb-4">{{ selected.description }}</p>
+
+                        <div class="mb-3">
+                            <h6 class="text-muted">Requirements</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" *ngFor="let requirement of selected.requirements">
+                                    {{ requirement }}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <h6 class="text-muted">Responsibilities</h6>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" *ngFor="let responsibility of selected.responsibilities">
+                                    {{ responsibility }}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-light text-dark border">{{
+                                selected.company
+                                }}</span>
+                            <span class="badge bg-light text-dark border">{{
+                                selected.location
+                                }}</span>
+                            <span class="badge bg-light text-dark border">{{
+                                selected.type | titlecase
+                                }}</span>
+                            <span class="badge bg-light text-dark border">{{ selected.experienceLevel | titlecase }}
+                                Level</span>
+                            <span class="badge bg-light text-dark border">{{
+                                selected.salary
+                                }}</span>
+                            <ng-container *ngFor="let tag of selected.tags">
+                                <span class="badge bg-secondary">{{ tag }}</span>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h6 class="card-title mb-3">Submit Your Application</h6>
+                                <form [formGroup]="applicationForm" (ngSubmit)="submit()">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="candidateNameInput">Full name</label>
+                                        <input type="text" id="candidateNameInput" class="form-control bg-light"
+                                            formControlName="candidateName" readonly [class.is-invalid]="
+                        controls['candidateName'].invalid &&
+                        controls['candidateName'].touched
+                      " />
+                                        <div class="invalid-feedback">Enter your name.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="candidateEmailInput">Email</label>
+                                        <input type="email" id="candidateEmailInput" class="form-control bg-light"
+                                            formControlName="candidateEmail" readonly [class.is-invalid]="
+                        controls['candidateEmail'].invalid &&
+                        controls['candidateEmail'].touched
+                      " />
+                                        <div class="invalid-feedback">
+                                            Enter a valid email address.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="form-label">Social links (optional)</div>
+                                        <div class="row g-2">
+                                            <div class="col-sm-6">
+                                                <input type="url" id="linkedinUrlInput" class="form-control"
+                                                    placeholder="https://www.linkedin.com/in/"
+                                                    formControlName="linkedinUrl" [class.is-invalid]="
+                            controls['linkedinUrl'].invalid &&
+                            controls['linkedinUrl'].touched
+                          " />
+                                                <div class="invalid-feedback">
+                                                    Enter a valid LinkedIn URL starting with https://.
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="url" id="githubUrlInput" class="form-control"
+                                                    placeholder="https://github.com/" formControlName="githubUrl"
+                                                    [class.is-invalid]="
+                            controls['githubUrl'].invalid &&
+                            controls['githubUrl'].touched
+                          " />
+                                                <div class="invalid-feedback">
+                                                    Enter a valid GitHub URL starting with https://.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-text">
+                                            Share links to your professional profiles to help
+                                            recruiters learn more about you.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="coverLetterInput">Cover letter</label>
+                                        <textarea rows="4" id="coverLetterInput" class="form-control"
+                                            formControlName="coverLetter" [class.is-invalid]="
+                        controls['coverLetter'].invalid &&
+                        controls['coverLetter'].touched
+                      "></textarea>
+                                        <div class="invalid-feedback">
+                                            Share why you are a great fit (min 50 characters).
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="documentsInput">Upload documents</label>
+                                        <input type="file" id="documentsInput" class="form-control"
+                                            (change)="handleFileSelection($event)" multiple />
+                                        <div class="form-text">
+                                            Attach a resume, cover letter, or certificates (max 5
+                                            files).
+                                        </div>
+                                        <ul class="list-group list-group-flush mt-2" *ngIf="uploadedDocuments.length">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center"
+                                                *ngFor="let doc of uploadedDocuments">
+                                                <div>
+                                                    <div class="fw-semibold">{{ doc.name }}</div>
+                                                    <div class="text-muted small">
+                                                        {{ doc.size / 1024 | number : "1.0-0" }} KB
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                    (click)="removeDocument(doc.id)">
+                                                    Remove
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <button class="btn btn-primary w-100" type="submit" [disabled]="submitting">
+                                        Submit Application
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" (click)="dismiss()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
