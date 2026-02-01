@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240" fill="none">
+    <rect width="400" height="240" rx="12" fill="#f5f7fb" />
+    <g fill="#9AA4B2">
+        <circle cx="200" cy="90" r="36" opacity="0.9" />
+        <rect x="110" y="140" width="180" height="12" rx="6" />
+        <rect x="110" y="164" width="120" height="10" rx="5" />
+    </g>
+    <text x="200" y="210" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#6b7280"
+        text-anchor="middle">No items</text>
+</svg>
